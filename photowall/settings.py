@@ -7,6 +7,7 @@ if 'SERVER_SOFTWARE' in os.environ:
     DEBUG = False
 else:
     DEBUG = True
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 #Project 绝对路径
