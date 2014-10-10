@@ -2,16 +2,21 @@
 
 from django.shortcuts import render_to_response
 from photowall.linkcalendar.models import Calendar
+from django.views.decorators.csrf import csrf_exempt
 
 import json
+from datetime import datetime
 from django.http import HttpResponse
 
 # Create your views here.
+
 
 def my_homepage_view(request):
     return render_to_response('index.html')
 
 # 输出 JSON
+
+
 def events_json(request):
     tmp = Calendar.objects.all()
     events = []
@@ -38,18 +43,29 @@ def events_json(request):
         cal_type = entry.cal_type
         title = entry.title
         if entry.start:
-            start = entry.start.strftime("%Y-%m-%d %H:%M:%S")
+            start = entry.start.strftime("%Y-%m-%dT%H:%M:%S")
         else:
             start = entry.start
         if entry.end:
-            end = entry.end.strftime("%Y-%m-%d %H:%M:%S")
+            end = entry.end.strftime("%Y-%m-%dT%H:%M:%S")
         else:
             end = entry.end
         allDay = entry.allDay
         url = entry.url
 
-        json_entry = {'id':id, 'title':title, 'cal_type':cal_type, 'start':start, 'end':end, 'allDay':allDay, 'url': url}
+        json_entry = {'id': id, 'title': title, 'cal_type': cal_type,
+                      'start': start, 'end': end, 'allDay': allDay, 'url': url}
         events.append(json_entry)
 
     # return render_to_response('index.html', locals())
     return HttpResponse(json.dumps(events), content_type='application/json')
+
+
+@csrf_exempt
+def updateEvent(request):
+    print request.method
+    if request.method == 'POST':
+        event = Calendar(title=request.POST['title'], start=datetime.strptime(
+            request.POST['start'], "%Y-%m-%dT%H:%M:%S.%fZ"))
+        event.save()
+    return HttpResponse()

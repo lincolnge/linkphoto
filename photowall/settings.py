@@ -2,7 +2,7 @@
 import os.path
 # Django settings for photowall project.
 
-#设置是否调试模式
+# 设置是否调试模式
 if 'SERVER_SOFTWARE' in os.environ:
     DEBUG = False
 else:
@@ -10,7 +10,7 @@ else:
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-#Project 绝对路径
+# Project 绝对路径
 PROJECT_ROOT = os.path.dirname(__file__)
 
 ADMINS = (
@@ -19,17 +19,17 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-#数据库设置
+# 数据库设置
 if 'SERVER_SOFTWARE' in os.environ:
-    #SAE
-    import sae.const 
+    # SAE
+    import sae.const
     MYSQL_DB = sae.const.MYSQL_DB
     MYSQL_USER = sae.const.MYSQL_USER
     MYSQL_PASS = sae.const.MYSQL_PASS
     MYSQL_HOST = sae.const.MYSQL_HOST
     MYSQL_PORT = sae.const.MYSQL_PORT
 else:
-    #LOCAL 本地调试用，便于导出数据库,根据本地MYSQL数据库填写下面参数
+    # LOCAL 本地调试用，便于导出数据库,根据本地MYSQL数据库填写下面参数
     MYSQL_DB = 'app_linkphoto'
     MYSQL_USER = 'root'
     MYSQL_PASS = 'root'
@@ -38,13 +38,20 @@ else:
 
 DATABASES = {
     'default': {
-        'ENGINE':   'django.db.backends.mysql',     # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME':     MYSQL_DB,                       # Or path to database file if using sqlite3.
-                                                    # The following settings are not used with sqlite3:
+        # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE':   'django.db.backends.mysql',
+        # Or path to database file if using sqlite3.
+        'NAME':     MYSQL_DB,
+        # The following settings
+        # are not used with
+        # sqlite3:
         'USER':     MYSQL_USER,
         'PASSWORD': MYSQL_PASS,
-        'HOST':     MYSQL_HOST,                     # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT':     MYSQL_PORT,                     # Set to empty string for default.
+        # Empty for localhost through domain sockets or '127.0.0.1' for
+        # localhost through TCP.
+        'HOST':     MYSQL_HOST,
+        # Set to empty string for default.
+        'PORT':     MYSQL_PORT,
     }
 }
 
@@ -89,8 +96,8 @@ MEDIA_URL = ''
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
 
-#ROOT文件夹——执行 manage.py collectstatic 后，所有静态文件就会被收集到这个文件夹.
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static').replace('\\','/')
+# ROOT文件夹——执行 manage.py collectstatic 后，所有静态文件就会被收集到这个文件夹.
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static').replace('\\', '/')
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
@@ -109,7 +116,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -119,7 +126,7 @@ SECRET_KEY = '2cqxv8ik0u62(nuic5a@z!0^j)t4a-oq9-+rdoj$2l19+0on2-'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+    #     'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -141,7 +148,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(os.path.dirname(__file__), 'templates').replace('\\','/'),
+    os.path.join(os.path.dirname(__file__), 'templates').replace('\\', '/'),
 )
 
 INSTALLED_APPS = (
