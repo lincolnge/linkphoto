@@ -25,7 +25,7 @@ $(document).ready(function() {
 
     /* initialize the calendar
     -----------------------------------------------------------------*/
-
+    currentTimezone = "Aisa/Shanghai";
     $('#calendar').fullCalendar({
         header: {
             left: 'prev,next today',
@@ -49,6 +49,8 @@ $(document).ready(function() {
         //     $('#calendar').fullCalendar('unselect');
         // },
         // editable: true,
+        timezone: currentTimezone,
+        editable: true, //允许拖动 
         eventLimit: true, // allow "more" link when too many events // 当有很多 events 时, 允许 "more" 链接
         events: {
             url: 'events_json',
@@ -56,7 +58,6 @@ $(document).ready(function() {
 
             }
         },
-        editable: true, //允许拖动 
         droppable: true, // this allows things to be dropped onto the calendar !!!
         drop: function(date) { // this function is called when something is dropped
 
@@ -67,7 +68,11 @@ $(document).ready(function() {
             var copiedEventObject = $.extend({}, originalEventObject);
 
             // assign it the date that was reported
-            copiedEventObject.start = date._d;
+            // copiedEventObject.start = date._d;
+            now = new Date();
+            now.setHours(now.getHours() + 8);
+            copiedEventObject.start = now.toJSON();
+            start = copiedEventObject.start
 
             // render the event on the calendar
             // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
@@ -81,13 +86,13 @@ $(document).ready(function() {
 
             // console.log(date)
             // console.log(originalEventObject)
-            var d = new Date();
-            console.log(d.toJSON())
-            console.log(copiedEventObject)
+
+            console.log(now.toJSON())
+            console.log(copiedEventObject.start)
             $.post("events/update/", {
                     // date: "date",
                     title: copiedEventObject.title,
-                    start: copiedEventObject.start.toJSON(),
+                    start: start,
                 },
                 function() {
                     console.log("OK")

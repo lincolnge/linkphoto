@@ -42,12 +42,16 @@ def events_json(request):
         id = entry.id
         cal_type = entry.cal_type
         title = entry.title
+        # entry.start.replace(hour=entry.start.hour + 8)
+        # print entry.start
         if entry.start:
-            start = entry.start.strftime("%Y-%m-%dT%H:%M:%S")
+            start = entry.start.replace(hour=entry.start.hour + 8).strftime(
+                "%Y-%m-%dT%H:%M:%S")
         else:
             start = entry.start
         if entry.end:
-            end = entry.end.strftime("%Y-%m-%dT%H:%M:%S")
+            end = entry.end.replace(
+                hour=entry.start.hour + 8).strftime("%Y-%m-%dT%H:%M:%S")
         else:
             end = entry.end
         allDay = entry.allDay
@@ -65,7 +69,14 @@ def events_json(request):
 def updateEvent(request):
     print request.method
     if request.method == 'POST':
-        event = Calendar(title=request.POST['title'], start=datetime.strptime(
-            request.POST['start'], "%Y-%m-%dT%H:%M:%S.%fZ"))
+        title = request.POST['title']
+        start = datetime.strptime(
+            request.POST['start'],
+            "%Y-%m-%dT%H:%M:%S.%fZ").strftime("%Y-%m-%dT%H:%M:%S")
+        print "start"
+        print start
+        print request.POST['start']
+        event = Calendar(
+            title=title, start=start)
         event.save()
     return HttpResponse()

@@ -4,6 +4,12 @@ from django.db import models
 # Create your models here.
 
 
+class EventName(models.Model):
+    title = models.CharField(max_length=30)
+    cal_type = models.CharField(max_length=30, blank=True)
+    url = models.URLField(blank=True)
+
+
 class Calendar(models.Model):
     title = models.CharField(max_length=30)
     cal_type = models.CharField(max_length=30, blank=True)
