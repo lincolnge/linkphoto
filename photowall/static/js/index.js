@@ -1,27 +1,32 @@
 $(document).ready(function() {
     /* initialize the external events
     -----------------------------------------------------------------*/
+    $.getJSON("eventname", function(result) {
+        $.each(result, function(i, field) {
+            $("#external-events").append("<div class='fc-event' cal_type=" + field.cal_type + ">" + field.title + "</div>");
 
-    $('#external-events .fc-event').each(function() {
+            $('#external-events .fc-event').each(function() {
 
-        // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
-        // it doesn't need to have a start or end
-        var eventObject = {
-            title: $.trim($(this).text()) // use the element's text as the event title
-        };
+                // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+                // it doesn't need to have a start or end
+                var eventObject = {
+                    title: $.trim($(this).text()), // use the element's text as the event title
+                    cal_type: $.trim($(this).attr('cal_type')), // use the element's text as the event title
+                };
 
-        // store the Event Object in the DOM element so we can get to it later
-        $(this).data('eventObject', eventObject);
+                // store the Event Object in the DOM element so we can get to it later
+                $(this).data('eventObject', eventObject);
 
-        // make the event draggable using jQuery UI
-        $(this).draggable({
-            zIndex: 999,
-            revert: true, // will cause the event to go back to its
-            revertDuration: 0 //  original position after the drag
+                // make the event draggable using jQuery UI
+                $(this).draggable({
+                    zIndex: 999,
+                    revert: true, // will cause the event to go back to its
+                    revertDuration: 0 //  original position after the drag
+                });
+
+            });
         });
-
     });
-
 
     /* initialize the calendar
     -----------------------------------------------------------------*/
@@ -73,6 +78,7 @@ $(document).ready(function() {
             now.setHours(now.getHours() + 8);
             copiedEventObject.start = now.toJSON();
             start = copiedEventObject.start
+            cal_type = copiedEventObject.cal_type
 
             // render the event on the calendar
             // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
@@ -85,13 +91,14 @@ $(document).ready(function() {
             }
 
             // console.log(date)
-            // console.log(originalEventObject)
+            console.log(originalEventObject)
 
             console.log(now.toJSON())
             console.log(copiedEventObject.start)
             $.post("events/update/", {
                     // date: "date",
                     title: copiedEventObject.title,
+                    cal_type: cal_type,
                     start: start,
                 },
                 function() {

@@ -1,8 +1,10 @@
 # coding:utf8
 
 from django.shortcuts import render_to_response
-from photowall.linkcalendar.models import Calendar
+from photowall.linkcalendar.models import EventName, Calendar
 from django.views.decorators.csrf import csrf_exempt
+# 时区问题 = =
+from django.utils.timezone import utc, localtime
 
 import json
 from datetime import datetime
@@ -14,17 +16,32 @@ from django.http import HttpResponse
 def my_homepage_view(request):
     return render_to_response('index.html')
 
+
+# 事件
+def eventname(request):
+    tmp = EventName.objects.all()
+    events = []
+
+    for entry in tmp:
+        id = entry.id
+        cal_type = entry.cal_type
+        title = entry.title
+        url = entry.url
+
+        json_entry = {'id': id, 'title': title,
+                      'cal_type': cal_type, 'url': url}
+        events.append(json_entry)
+
+    return HttpResponse(json.dumps(events), content_type='application/json')
+
+
 # 输出 JSON
-
-
 def events_json(request):
     tmp = Calendar.objects.all()
     events = []
-    tmpevents = {}
-
-    end_events = []
 
     # 这种不行, 不知道为啥
+    # tmpevents = {}
     # for x in xrange(0, len(tmp)):
     #     tmpevents['cal_type'] = tmp[x].cal_type
     #     tmpevents['title'] = tmp[x].title
@@ -42,16 +59,14 @@ def events_json(request):
         id = entry.id
         cal_type = entry.cal_type
         title = entry.title
-        # entry.start.replace(hour=entry.start.hour + 8)
-        # print entry.start
         if entry.start:
-            start = entry.start.replace(hour=entry.start.hour + 8).strftime(
+            start = localtime(entry.start.replace(tzinfo=utc)).strftime(
                 "%Y-%m-%dT%H:%M:%S")
         else:
             start = entry.start
         if entry.end:
-            end = entry.end.replace(
-                hour=entry.start.hour + 8).strftime("%Y-%m-%dT%H:%M:%S")
+            end = localtime(entry.end.replace(tzinfo=utc)).strftime(
+                "%Y-%m-%dT%H:%M:%S")
         else:
             end = entry.end
         allDay = entry.allDay
@@ -70,13 +85,12 @@ def updateEvent(request):
     print request.method
     if request.method == 'POST':
         title = request.POST['title']
+        cal_type = request.POST['cal_type']
         start = datetime.strptime(
             request.POST['start'],
             "%Y-%m-%dT%H:%M:%S.%fZ").strftime("%Y-%m-%dT%H:%M:%S")
-        print "start"
-        print start
-        print request.POST['start']
+
         event = Calendar(
-            title=title, start=start)
+            title=title, cal_type=cal_type, start=start)
         event.save()
     return HttpResponse()
