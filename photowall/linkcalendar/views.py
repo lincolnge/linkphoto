@@ -1,7 +1,7 @@
 # coding:utf8
 
 from django.shortcuts import render_to_response
-from photowall.linkcalendar.models import EventName, Calendar
+from photowall.linkcalendar.models import CalType, EventName, Calendar
 from django.views.decorators.csrf import csrf_exempt
 # 时区问题 = =
 from django.utils.timezone import utc, localtime
@@ -24,12 +24,13 @@ def eventname(request):
 
     for entry in tmp:
         id = entry.id
-        cal_type = entry.cal_type
-        title = entry.title
+        name = entry.name
+        cal_type = CalType.objects.get(id=entry.cal_type_id)
+        counts = entry.counts
         url = entry.url
 
-        json_entry = {'id': id, 'title': title,
-                      'cal_type': cal_type, 'url': url}
+        json_entry = {'id': id, 'name': name,
+                      'cal_type': cal_type.name, 'counts': counts, 'url': url}
         events.append(json_entry)
 
     return HttpResponse(json.dumps(events), content_type='application/json')
@@ -57,8 +58,13 @@ def events_json(request):
 
     for entry in tmp:
         id = entry.id
-        cal_type = entry.cal_type
-        title = entry.title
+
+        event_info = EventName.objects.get(id=entry.title_id)
+        title = event_info.name
+        cal_type = event_info.cal_type.name
+        counts = event_info.counts
+        url = event_info.url
+
         if entry.start:
             start = localtime(entry.start.replace(tzinfo=utc)).strftime(
                 "%Y-%m-%dT%H:%M:%S")
@@ -70,10 +76,9 @@ def events_json(request):
         else:
             end = entry.end
         allDay = entry.allDay
-        url = entry.url
 
-        json_entry = {'id': id, 'title': title, 'cal_type': cal_type,
-                      'start': start, 'end': end, 'allDay': allDay, 'url': url}
+        json_entry = {'id': id, 'title': title, 'cal_type': cal_type, 'counts':
+                      counts, 'url': url, 'start': start, 'end': end, 'allDay': allDay}
         events.append(json_entry)
 
     # return render_to_response('index.html', locals())

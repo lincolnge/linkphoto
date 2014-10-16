@@ -3,7 +3,7 @@ $(document).ready(function() {
     -----------------------------------------------------------------*/
     $.getJSON("eventname", function(result) {
         $.each(result, function(i, field) {
-            $("#external-events").append("<div class='fc-event' cal_type=" + field.cal_type + ">" + field.title + "</div>");
+            $("#external-events").append("<div class='fc-event' cal_type=" + field.cal_type + ">" + field.name + "</div>");
 
             $('#external-events .fc-event').each(function() {
 
