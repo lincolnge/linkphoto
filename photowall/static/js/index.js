@@ -3,7 +3,7 @@ $(document).ready(function() {
     -----------------------------------------------------------------*/
     $.getJSON("eventname", function(result) {
         $.each(result, function(i, field) {
-            $("#external-events").append("<div class='fc-event' cal_type=" + field.cal_type + ">" + field.name + "</div>");
+            $("#external-events").append("<div class='fc-event' title_id=" + field.id + ">" + field.name + "</div>");
 
             $('#external-events .fc-event').each(function() {
 
@@ -11,7 +11,7 @@ $(document).ready(function() {
                 // it doesn't need to have a start or end
                 var eventObject = {
                     title: $.trim($(this).text()), // use the element's text as the event title
-                    cal_type: $.trim($(this).attr('cal_type')), // use the element's text as the event title
+                    title_id: $.trim($(this).attr('title_id')),
                 };
 
                 // store the Event Object in the DOM element so we can get to it later
@@ -77,8 +77,8 @@ $(document).ready(function() {
             now = new Date();
             now.setHours(now.getHours() + 8);
             copiedEventObject.start = now.toJSON();
+            title_id = copiedEventObject.title_id
             start = copiedEventObject.start
-            cal_type = copiedEventObject.cal_type
 
             // render the event on the calendar
             // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
@@ -90,15 +90,9 @@ $(document).ready(function() {
                 $(this).remove();
             }
 
-            // console.log(date)
-            console.log(originalEventObject)
-
-            console.log(now.toJSON())
-            console.log(copiedEventObject.start)
             $.post("events/update/", {
                     // date: "date",
-                    title: copiedEventObject.title,
-                    cal_type: cal_type,
+                    title_id: title_id,
                     start: start,
                 },
                 function() {

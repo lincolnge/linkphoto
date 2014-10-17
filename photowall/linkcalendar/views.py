@@ -59,7 +59,8 @@ def events_json(request):
     for entry in tmp:
         id = entry.id
 
-        event_info = EventName.objects.get(id=entry.title_id)
+        title_id = entry.title_id
+        event_info = EventName.objects.get(id=title_id)
         title = event_info.name
         cal_type = event_info.cal_type.name
         counts = event_info.counts
@@ -77,7 +78,7 @@ def events_json(request):
             end = entry.end
         allDay = entry.allDay
 
-        json_entry = {'id': id, 'title': title, 'cal_type': cal_type, 'counts':
+        json_entry = {'id': id, 'title_id': title_id, 'title': title, 'cal_type': cal_type, 'counts':
                       counts, 'url': url, 'start': start, 'end': end, 'allDay': allDay}
         events.append(json_entry)
 
@@ -89,13 +90,13 @@ def events_json(request):
 def updateEvent(request):
     print request.method
     if request.method == 'POST':
-        title = request.POST['title']
-        cal_type = request.POST['cal_type']
+        title_id = request.POST['title_id']
+        print title_id
         start = datetime.strptime(
             request.POST['start'],
             "%Y-%m-%dT%H:%M:%S.%fZ").strftime("%Y-%m-%dT%H:%M:%S")
 
         event = Calendar(
-            title=title, cal_type=cal_type, start=start)
+            title_id=title_id, start=start)
         event.save()
     return HttpResponse()
