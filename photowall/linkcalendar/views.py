@@ -13,10 +13,6 @@ from django.http import HttpResponse
 # Create your views here.
 
 
-def my_homepage_view(request):
-    return render_to_response('index.html')
-
-
 # 事件
 def eventname(request):
     tmp = EventName.objects.all()

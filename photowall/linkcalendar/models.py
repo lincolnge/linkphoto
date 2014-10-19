@@ -8,7 +8,7 @@ class CalType(models.Model):
     name = models.CharField(max_length=30, blank=True)
 
     def __unicode__(self):
-        return self.name
+        return unicode(self.name)
 
 
 class EventName(models.Model):
@@ -17,8 +17,9 @@ class EventName(models.Model):
     counts = models.IntegerField(blank=True)
     url = models.URLField(blank=True)
 
+    # 'EventName' object has no attribute '__getitem__'
     def __unicode__(self):
-        return self.name
+        return unicode(self.name)
 
 
 class Calendar(models.Model):
@@ -28,7 +29,7 @@ class Calendar(models.Model):
     allDay = models.BooleanField(blank=True)
 
     def __unicode__(self):
-        return self.title
+        return unicode(self.title)
 
     # 按照起始时间排序
     class Meta:
