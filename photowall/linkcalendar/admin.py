@@ -10,10 +10,10 @@ class EventNameAdmin(admin.ModelAdmin):
 
 
 class CalendarAdmin(admin.ModelAdmin):
-    list_display = ('title', 'start', 'end')
+    list_display = ('title', 'start', 'end', 'allDay')
     list_filter = ('start',)
     ordering = ('-start',)
-    fields = ('title', 'start', 'end')
+    fields = ('title', 'start', 'end', 'allDay')
 
 admin.site.register(CalType)
 admin.site.register(EventName, EventNameAdmin)

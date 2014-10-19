@@ -1,7 +1,7 @@
 $(document).ready(function() {
     /* initialize the external events
     -----------------------------------------------------------------*/
-    $.getJSON("eventname", function(result) {
+    $.getJSON("cal/eventname", function(result) {
         $.each(result, function(i, field) {
             $("#external-events").append("<div class='fc-event' title_id=" + field.id + ">" + field.name + "</div>");
 
@@ -58,7 +58,7 @@ $(document).ready(function() {
         editable: true, //允许拖动 
         eventLimit: true, // allow "more" link when too many events // 当有很多 events 时, 允许 "more" 链接
         events: {
-            url: 'events_json',
+            url: 'cal/events_json',
             error: function() {
 
             }
@@ -90,7 +90,7 @@ $(document).ready(function() {
                 $(this).remove();
             }
 
-            $.post("events/update/", {
+            $.post("cal/events/update/", {
                     // date: "date",
                     title_id: title_id,
                     start: start,

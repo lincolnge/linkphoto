@@ -19,15 +19,9 @@ urlpatterns = patterns('',
                        # Uncomment the next line to enable the admin:
                        url(r'^admin/', include(admin.site.urls)),
                        url('^$', my_homepage_view),
-
+                       url(r'^cal/', include('photowall.linkcalendar.urls')),
                        )
 
-# 日历的 url
-urlpatterns += patterns('photowall.linkcalendar.views',
-                        url(r'^eventname/', 'eventname'),        # 有什么事件
-                        url(r'^events_json/', 'events_json'),    # 显示事件
-                        url(r'^events/update/', 'updateEvent'),  # 更新事件
-                        )
 
 # Serving static files in development
 urlpatterns += staticfiles_urlpatterns()
