@@ -30,7 +30,7 @@ $(document).ready(function() {
 
     /* initialize the calendar
     -----------------------------------------------------------------*/
-    currentTimezone = "Aisa/Shanghai";
+    var currentTimezone = "Aisa/Shanghai";
     $('#calendar').fullCalendar({
         header: {
             left: 'prev,next today',
