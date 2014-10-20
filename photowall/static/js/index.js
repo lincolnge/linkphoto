@@ -1,3 +1,8 @@
+/* Main JS */
+/* jshint node:true */
+
+'use strict';
+
 $(document).ready(function() {
     /* initialize the external events
     -----------------------------------------------------------------*/
@@ -62,7 +67,7 @@ $(document).ready(function() {
             }
         },
         droppable: true, // this allows things to be dropped onto the calendar !!!
-        drop: function(date) { // this function is called when something is dropped
+        drop: function() { // this function is called when something is dropped
 
             // retrieve the dropped element's stored Event Object
             var originalEventObject = $(this).data('eventObject');
@@ -72,11 +77,11 @@ $(document).ready(function() {
 
             // assign it the date that was reported
             // copiedEventObject.start = date._d;
-            now = new Date();
+            var now = new Date();
+            var title_id = copiedEventObject.title_id;
+            var start = copiedEventObject.start;
             now.setHours(now.getHours() + 8);
             copiedEventObject.start = now.toJSON();
-            title_id = copiedEventObject.title_id
-            start = copiedEventObject.start
 
             // render the event on the calendar
             // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
@@ -89,17 +94,16 @@ $(document).ready(function() {
             }
 
             $.post("cal/events/update/", {
-                    // date: "date",
                     title_id: title_id,
                     start: start,
                 },
                 function() {
-                    console.log("OK")
+                    console.log("OK");
                 }
-            )
+            );
         },
         // 日历内拖动事件
-        eventDrop: function(event, delta, revertFunc) {
+        eventDrop: function(event) {
             // alert(event.title + " was dropped on " + event.start.format());
             console.log(event.title + " was dropped on " + event.start.format());
 

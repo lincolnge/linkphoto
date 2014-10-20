@@ -1,3 +1,6 @@
+/* To prevent jshint from yelling at module.exports. */
+/* jshint node:true */
+
 'use strict';
 
 module.exports = function(grunt) {
@@ -48,6 +51,7 @@ module.exports = function(grunt) {
             }
         },
 
+        // 检查JavaScript语法
         jshint: {
             options: {
                 jshintrc: '.jshintrc'
@@ -55,7 +59,7 @@ module.exports = function(grunt) {
             source: [
                 'Gruntfile.js',
                 '<%= static_path %>/js/**/*.js',
-                '<%= static_path %>/js/**/*.min.js',
+                '!<%= static_path %>/js/**/*.min.js',
             ]
         },
 
@@ -66,7 +70,7 @@ module.exports = function(grunt) {
             },
             dist: {
                 files: {
-                    '<%= static_path %>/js/index.min.js': ['<%= static_path %>/js/*.js']
+                    '<%= static_path %>/js/index.min.js': ['<%= static_path %>/js/**/*.js','!<%= static_path %>/js/index.min.js']
                 }
             }
         },
@@ -83,8 +87,8 @@ module.exports = function(grunt) {
 
             // when scripts change, lint them and copy to destination
             scripts: {
-                files: ['photowall/static/js/*.js'],
-                tasks: ['uglify']
+                files: ['<%= static_path %>/js/**/*.js','!<%= static_path %>/js/**/*.min.js'],
+                tasks: ['jshint:source','uglify']
             }
         }
     });
@@ -100,6 +104,7 @@ module.exports = function(grunt) {
         return grunt.task.run([
             'compass:uncompressed',       // Build the CSS using Compass without compression
             'cssmin',
+            'jshint:source',
             'uglify',
             'watch'
         ]);
