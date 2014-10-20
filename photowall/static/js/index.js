@@ -6,7 +6,6 @@ $(document).ready(function() {
             $("#external-events").append("<div class='fc-event' title_id=" + field.id + ">" + field.name + "</div>");
 
             $('#external-events .fc-event').each(function() {
-
                 // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
                 // it doesn't need to have a start or end
                 var eventObject = {
@@ -23,7 +22,6 @@ $(document).ready(function() {
                     revert: true, // will cause the event to go back to its
                     revertDuration: 0 //  original position after the drag
                 });
-
             });
         });
     });
@@ -108,8 +106,6 @@ $(document).ready(function() {
             // if (!confirm("Are you sure about this change?")) {
             //     revertFunc();
             // }
-
-
         }
     });
 });
