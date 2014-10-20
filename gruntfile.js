@@ -18,11 +18,12 @@ module.exports = function(grunt) {
     grunt.initConfig({
         // 从package.json文件中读取我们的项目配置并存储到pkg属性中
         pkg: grunt.file.readJSON('package.json'),
+        static_path: 'photowall/static',
         compass: {
             options: {
-                sassDir: 'photowall/static/sass',
-                imagesDir: 'photowall/static/imgs',
-                cssDir: 'photowall/static/css',
+                sassDir: '<%= static_path %>/sass',
+                imagesDir: '<%= static_path %>/imgs',
+                cssDir: '<%= static_path %>/css',
                 force: true
             },
             uncompressed: {
@@ -37,14 +38,24 @@ module.exports = function(grunt) {
             }
         },
 
+        cssmin: {
+            css: {
+                src: '<%= static_path %>/css/style.css',
+                dest: '<%= static_path %>/css/style.min.css',
+                options: {
+                    keepSpecialComments: 0
+                }
+            }
+        },
+
         jshint: {
             options: {
                 jshintrc: '.jshintrc'
             },
             source: [
                 'Gruntfile.js',
-                'photowall/static/js/**/*.js',
-                'photowall/static/js/**/*.min.js'
+                '<%= static_path %>/js/**/*.js',
+                '<%= static_path %>/js/**/*.min.js',
             ]
         },
 
@@ -55,7 +66,7 @@ module.exports = function(grunt) {
             },
             dist: {
                 files: {
-                    'photowall/static/js/index.min.js': ['photowall/static/js/*.js']
+                    '<%= static_path %>/js/index.min.js': ['<%= static_path %>/js/*.js']
                 }
             }
         },
@@ -63,9 +74,11 @@ module.exports = function(grunt) {
         watch: {
             styles: {
                 files: [
-                    'photowall/static/sass/*.scss',
+                    '<%= static_path %>/sass/**/*.scss',
+                    '<%= static_path %>/css/**/*.css',
+                    '!<%= static_path %>/css/**/*.min.css'
                 ],
-                tasks: ['compass:compressed']
+                tasks: ['compass:uncompressed','cssmin']
             },
 
             // when scripts change, lint them and copy to destination
@@ -77,6 +90,7 @@ module.exports = function(grunt) {
     });
 
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-compass');
     grunt.loadNpmTasks('grunt-contrib-watch');
@@ -84,7 +98,8 @@ module.exports = function(grunt) {
     // Develop task
     grunt.registerTask('develop', 'The default task for developers.\nRuns the tests, builds the minimum required, serves the content (source and destination) and watches for changes.', function() {
         return grunt.task.run([
-            'compass:compressed',       // Build the CSS using Compass without compression
+            'compass:uncompressed',       // Build the CSS using Compass without compression
+            'cssmin',
             'uglify',
             'watch'
         ]);
