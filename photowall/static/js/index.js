@@ -79,9 +79,10 @@ $(document).ready(function() {
             // copiedEventObject.start = date._d;
             var now = new Date();
             var title_id = copiedEventObject.title_id;
-            var start = copiedEventObject.start;
+            
             now.setHours(now.getHours() + 8);
             copiedEventObject.start = now.toJSON();
+            var start = copiedEventObject.start;
 
             // render the event on the calendar
             // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)

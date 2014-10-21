@@ -87,7 +87,7 @@ def updateEvent(request):
     print request.method
     if request.method == 'POST':
         title_id = request.POST['title_id']
-        print title_id
+
         start = datetime.strptime(
             request.POST['start'],
             "%Y-%m-%dT%H:%M:%S.%fZ").strftime("%Y-%m-%dT%H:%M:%S")
