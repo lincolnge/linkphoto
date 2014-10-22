@@ -3,6 +3,8 @@
 from django.conf.urls import patterns, include, url
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
+from django.views.generic import RedirectView
+
 from photowall.views import *
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -17,6 +19,9 @@ urlpatterns = patterns('',
                        # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
                        # Uncomment the next line to enable the admin:
+                       url(r'^favicon\.ico$', RedirectView.as_view(
+                           url='/static/images/favicon.ico')),
+
                        url(r'^admin/', include(admin.site.urls)),
                        url('^$', my_homepage_view),
                        url(r'^cal/', include('photowall.linkcalendar.urls')),
