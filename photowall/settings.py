@@ -7,7 +7,6 @@ if 'SERVER_SOFTWARE' in os.environ:
     DEBUG = False
 else:
     DEBUG = True
-DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 # Project 绝对路径
@@ -57,7 +56,10 @@ DATABASES = {
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = []
+if 'SERVER_SOFTWARE' in os.environ:
+    ALLOWED_HOSTS = ['linkphoto.sinaapp.com']
+else:
+    ALLOWED_HOSTS = ['*']
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
