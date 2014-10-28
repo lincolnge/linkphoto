@@ -7,13 +7,14 @@ if 'SERVER_SOFTWARE' in os.environ:
     DEBUG = False
 else:
     DEBUG = True
+# DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 # Project 绝对路径
 PROJECT_ROOT = os.path.dirname(__file__)
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Lincoln', 'newpxm7@gmail.com'),
 )
 
 MANAGERS = ADMINS
