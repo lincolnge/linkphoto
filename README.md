@@ -20,5 +20,5 @@ CREATE DATABASE app_linkphoto DEFAULT CHARACTER SET gbk COLLATE gbk_chinese_ci;
 
 ## References
 
-	- fullcalendar: <http://fullcalendar.io/>
-	- jqueryui: <http://jqueryui.com/>
+- fullcalendar: <http://fullcalendar.io/>
+- jqueryui: <http://jqueryui.com/>
