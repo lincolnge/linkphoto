@@ -1,16 +1,24 @@
 # PhotoWall
 
-## 自定义日历
+## Introduce
 
-数据库创建  
+该项目可以记录每天运动量。采用 fullcalendar + Django 搭建，数据库为 MySQL
+
+## Create Database
+
 CREATE DATABASE app_linkphoto DEFAULT CHARACTER SET gbk COLLATE gbk_chinese_ci;
 
-## bower
+## Bower
 
 	$ bower install jquery-ui
 	$ bower install fullcalendar
 
-## gulp
+## Gulp
 
 	$ gulp
 	$ gulp serve
+
+## References
+
+	- fullcalendar: <http://fullcalendar.io/>
+	- jqueryui: <http://jqueryui.com/>
