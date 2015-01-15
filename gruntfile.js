@@ -20,7 +20,7 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         // 从package.json文件中读取我们的项目配置并存储到pkg属性中
-        pkg: grunt.file.readJSON('package.json'),
+        pkg: grunt.file.readJSON('package_grunt.json'),
         static_path: 'photowall/static',
         compass: {
             options: {
