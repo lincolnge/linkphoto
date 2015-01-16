@@ -56,26 +56,26 @@ gulp.task('images', function () {
       progressive: true,
       interlaced: true
     })))
-    .pipe(gulp.dest('dist/images'))
+    .pipe(gulp.dest('photowall/static/images/'))
     .pipe($.size({title: 'images'}));
 });
 
 // Copy All Files At The Root Level (app)
 gulp.task('copy', function () {
   return gulp.src([
-    'app/*',
+    'app/**',
     '!app/*.html',
-    'node_modules/apache-server-configs/dist/.htaccess'
+    // 'node_modules/apache-server-configs/dist/.htaccess'
   ], {
     dot: true
-  }).pipe(gulp.dest('dist'))
+  }).pipe(gulp.dest('photowall/static/'))
     .pipe($.size({title: 'copy'}));
 });
 
 // Copy Web Fonts To Dist
 gulp.task('fonts', function () {
   return gulp.src(['app/fonts/**'])
-    .pipe(gulp.dest('dist/fonts'))
+    .pipe(gulp.dest('photowall/static/fonts/'))
     .pipe($.size({title: 'fonts'}));
 });
 
@@ -96,7 +96,7 @@ gulp.task('styles', function () {
     .pipe(gulp.dest('.tmp/styles'))
     // Concatenate And Minify Styles
     .pipe($.if('*.css', $.csso()))
-    .pipe(gulp.dest('dist/styles'))
+    .pipe(gulp.dest('photowall/static/styles'))
     .pipe($.size({title: 'styles'}));
 });
 
@@ -132,27 +132,27 @@ gulp.task('html', function () {
     // Minify Any HTML
     .pipe($.if('*.html', $.minifyHtml()))
     // Output Files
-    .pipe(gulp.dest('dist'))
+    .pipe(gulp.dest('photowall/templates/'))
     .pipe($.size({title: 'html'}));
 });
 
 // Clean Output Directory
-gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
+gulp.task('clean', del.bind(null, ['.tmp', 'dist', 'photowall/templates/', 'photowall/static/']));
 
 // Watch Files For Changes & Reload
 gulp.task('serve', ['styles'], function () {
-  browserSync({
-    notify: false,
-    // Run as an https by uncommenting 'https: true'
-    // Note: this uses an unsigned certificate which on first access
-    //       will present a certificate warning in the browser.
-    // https: true,
-    server: ['.tmp', 'app']
-  });
+  // browserSync({
+  //   notify: false,
+  //   // Run as an https by uncommenting 'https: true'
+  //   // Note: this uses an unsigned certificate which on first access
+  //   //       will present a certificate warning in the browser.
+  //   // https: true,
+  //   server: ['.tmp', 'app']
+  // });
 
-  gulp.watch(['app/**/*.html'], reload);
+  gulp.watch(['app/**/*.html'], ['html', reload]);
   gulp.watch(['app/styles/**/*.{scss,css}'], ['styles', reload]);
-  gulp.watch(['app/scripts/**/*.js'], ['jshint']);
+  gulp.watch(['app/scripts/**/*.js'], ['jshint', 'html']);
   gulp.watch(['app/images/**/*'], reload);
 });
 

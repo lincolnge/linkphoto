@@ -10,7 +10,7 @@ CREATE DATABASE app_linkphoto DEFAULT CHARACTER SET gbk COLLATE gbk_chinese_ci;
 
 ## Bower
 
-In Dir photowall/static/
+In Dir app/
 
 	$ bower install jquery-ui
 	$ bower install fullcalendar
