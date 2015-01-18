@@ -14,14 +14,16 @@ from django.http import HttpResponse
 
 
 # 事件
+@csrf_exempt
 def eventname(request):
-    tmp = EventName.objects.all()
+    tmp = EventName.objects.filter(user_id=request.user.id)
     events = []
 
     for entry in tmp:
         id = entry.id
         name = entry.name
-        cal_type = CalType.objects.get(id=entry.cal_type_id)
+        cal_type = CalType.objects.get(
+            id=entry.cal_type_id)
         counts = entry.counts
         url = entry.url
 
@@ -32,9 +34,10 @@ def eventname(request):
     return HttpResponse(json.dumps(events), content_type='application/json')
 
 
+@csrf_exempt
 # 输出 JSON
 def events_json(request):
-    tmp = Calendar.objects.all()
+    tmp = Calendar.objects.filter(user_id=request.user.id)
     events = []
 
     # 这种不行, 不知道为啥
@@ -56,7 +59,8 @@ def events_json(request):
         id = entry.id
 
         title_id = entry.title_id
-        event_info = EventName.objects.get(id=title_id)
+        event_info = EventName.objects.get(
+            id=title_id, user_id=request.user.id)
         title = event_info.name
         cal_type = event_info.cal_type.name
         counts = event_info.counts
@@ -86,13 +90,21 @@ def events_json(request):
 def updateEvent(request):
     print request.method
     if request.method == 'POST':
-        title_id = request.POST['title_id']
+        if request.user.is_authenticated():
+            # Do something for authenticated users.
+            print 'y'
+            print request.user.id  # 用户 id
+            title_id = request.POST['title_id']
 
-        start = datetime.strptime(
-            request.POST['start'],
-            "%Y-%m-%dT%H:%M:%S.%fZ").strftime("%Y-%m-%dT%H:%M:%S")
+            start = datetime.strptime(
+                request.POST['start'],
+                "%Y-%m-%dT%H:%M:%S.%fZ").strftime("%Y-%m-%dT%H:%M:%S")
 
-        event = Calendar(
-            title_id=title_id, start=start)
-        event.save()
+            event = Calendar(
+                user_id=request.user.id, title_id=title_id, start=start)
+
+            # event.save()
+        else:
+            # Do something for anonymous users.
+            print 'n'
     return HttpResponse()

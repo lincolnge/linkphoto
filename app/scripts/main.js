@@ -58,7 +58,7 @@ $(document).ready(function() {
         // },
         // editable: true,
         timezone: currentTimezone,
-        editable: false, //允许拖动 
+        editable: false, // 不允许拖动 
         eventLimit: true, // allow "more" link when too many events // 当有很多 events 时, 允许 "more" 链接
         events: {
             url: 'cal/events_json',

@@ -1,10 +1,12 @@
 # coding:utf8
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
 
 class CalType(models.Model):
+    user = models.ForeignKey(User)
     name = models.CharField(max_length=30, blank=True)
 
     def __unicode__(self):
@@ -12,6 +14,7 @@ class CalType(models.Model):
 
 
 class EventName(models.Model):
+    user = models.ForeignKey(User)
     name = models.CharField(max_length=30)
     cal_type = models.ForeignKey(CalType)
     counts = models.IntegerField(blank=True)
@@ -23,6 +26,7 @@ class EventName(models.Model):
 
 
 class Calendar(models.Model):
+    user = models.ForeignKey(User)
     title = models.ForeignKey(EventName)
     start = models.DateTimeField(null=True, blank=True)
     end = models.DateTimeField(null=True, blank=True)

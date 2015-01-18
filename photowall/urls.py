@@ -25,6 +25,7 @@ urlpatterns = patterns('',
                        url(r'^admin/', include(admin.site.urls)),
                        url('^$', my_homepage_view),
                        url(r'^cal/', include('photowall.linkcalendar.urls')),
+                       url(r'^accounts/', include('photowall.accounts.urls')),
                        )
 
 
