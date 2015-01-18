@@ -16,7 +16,8 @@ from django.http import HttpResponse
 # 事件
 @csrf_exempt
 def eventname(request):
-    tmp = EventName.objects.filter(user_id=request.user.id)
+    # tmp = EventName.objects.filter(user_id=request.user.id)
+    tmp = EventName.objects.all()
     events = []
 
     for entry in tmp:
@@ -34,10 +35,11 @@ def eventname(request):
     return HttpResponse(json.dumps(events), content_type='application/json')
 
 
-@csrf_exempt
 # 输出 JSON
+@csrf_exempt
 def events_json(request):
     tmp = Calendar.objects.filter(user_id=request.user.id)
+    # tmp = Calendar.objects.all()
     events = []
 
     # 这种不行, 不知道为啥
@@ -60,7 +62,7 @@ def events_json(request):
 
         title_id = entry.title_id
         event_info = EventName.objects.get(
-            id=title_id, user_id=request.user.id)
+            id=title_id)
         title = event_info.name
         cal_type = event_info.cal_type.name
         counts = event_info.counts
@@ -103,7 +105,7 @@ def updateEvent(request):
             event = Calendar(
                 user_id=request.user.id, title_id=title_id, start=start)
 
-            # event.save()
+            event.save()
         else:
             # Do something for anonymous users.
             print 'n'
