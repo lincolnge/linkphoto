@@ -8,13 +8,15 @@ from django.utils.timezone import utc, localtime
 
 import json
 from datetime import datetime
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
 
 # 事件
 @csrf_exempt
+@login_required
 def eventname(request):
     # tmp = EventName.objects.filter(user_id=request.user.id)
     tmp = EventName.objects.all()
@@ -37,6 +39,7 @@ def eventname(request):
 
 # 输出 JSON
 @csrf_exempt
+@login_required
 def events_json(request):
     tmp = Calendar.objects.filter(user_id=request.user.id)
     # tmp = Calendar.objects.all()
@@ -88,25 +91,35 @@ def events_json(request):
     return HttpResponse(json.dumps(events), content_type='application/json')
 
 
+# 添加一个事件
 @csrf_exempt
-def updateEvent(request):
-    print request.method
+@login_required
+def addEvent(request):
     if request.method == 'POST':
-        if request.user.is_authenticated():
-            # Do something for authenticated users.
-            print 'y'
-            print request.user.id  # 用户 id
-            title_id = request.POST['title_id']
+        name = request.POST['eventname']
+        cal_type_id = 1
+        counts = request.POST['counts']
+        url = request.POST['url']
+        eventName = EventName(
+            user_id=request.user.id, name=name, cal_type_id=cal_type_id, counts=counts, url=url)
+        eventName.save()
 
-            start = datetime.strptime(
-                request.POST['start'],
-                "%Y-%m-%dT%H:%M:%S.%fZ").strftime("%Y-%m-%dT%H:%M:%S")
+    return HttpResponseRedirect('/')
 
-            event = Calendar(
-                user_id=request.user.id, title_id=title_id, start=start)
 
-            event.save()
-        else:
-            # Do something for anonymous users.
-            print 'n'
+@csrf_exempt
+@login_required
+def updateEvent(request):
+    if request.method == 'POST':
+        # Do something for authenticated users.
+        title_id = request.POST['title_id']
+
+        start = datetime.strptime(
+            request.POST['start'],
+            "%Y-%m-%dT%H:%M:%S.%fZ").strftime("%Y-%m-%dT%H:%M:%S")
+
+        event = Calendar(
+            user_id=request.user.id, title_id=title_id, start=start)
+
+        event.save()
     return HttpResponse()

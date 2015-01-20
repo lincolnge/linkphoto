@@ -8,7 +8,7 @@ $(document).ready(function() {
     -----------------------------------------------------------------*/
     $.getJSON("cal/eventname", function(result) {
         $.each(result, function(i, field) {
-            $("#external-events").append("<div class='fc-event' title_id=" + field.id + ">" + field.name + "</div>");
+            $("#addButton").before("<div class='fc-event' title_id=" + field.id + ">" + field.name + "</div>");
 
             $('#external-events .fc-event').each(function() {
                 // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)

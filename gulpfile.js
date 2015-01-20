@@ -141,14 +141,16 @@ gulp.task('clean', del.bind(null, ['.tmp', 'dist', 'photowall/templates/', 'phot
 
 // Watch Files For Changes & Reload
 gulp.task('serve', ['styles'], function () {
-  // browserSync({
+  browserSync({
+    proxy: "localhost:4001",
+    port: 3001
   //   notify: false,
   //   // Run as an https by uncommenting 'https: true'
   //   // Note: this uses an unsigned certificate which on first access
   //   //       will present a certificate warning in the browser.
   //   // https: true,
   //   server: ['.tmp', 'app']
-  // });
+  });
 
   gulp.watch(['app/**/*.html'], ['html', reload]);
   gulp.watch(['app/styles/**/*.{scss,css}'], ['styles', reload]);
