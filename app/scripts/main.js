@@ -80,7 +80,7 @@ $(document).ready(function() {
             // copiedEventObject.start = date._d;
             var now = new Date();
             var title_id = copiedEventObject.title_id;
-            
+
             now.setHours(now.getHours() + 8);
             copiedEventObject.start = now.toJSON();
             var start = copiedEventObject.start;
@@ -115,7 +115,14 @@ $(document).ready(function() {
         }
     });
 
-    $("#addButton").on("click", function () {
-        $(".form-add-events").css({"display": "block"});
+    $("#addButton").on("click", function(event) {
+        event.preventDefault();
+        $(".form-add-events").addClass("display-block");
+    });
+    $("html").on("click", function(event) {
+        if (event.isDefaultPrevented()) {
+            return;
+        }
+        $(".form-add-events").removeClass("display-block");
     });
 });
