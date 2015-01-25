@@ -9,4 +9,5 @@ urlpatterns = patterns('photowall.accounts.views',
                        url(r'^logout/', 'logout'),
                        url(r'^register/', 'register'),  # 注册
                        url(r'^profile/', 'profile'),  # 个人页面
+                       url(r'^password/', 'password'),  # 修改密码
                        )

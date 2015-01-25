@@ -5,7 +5,7 @@
     margin: auto;
     max-width: 800px;
 }
-#login, #register {
+#login, #register, #form-password {
     padding: 20px;
     width: 50%;
     box-sizing: border-box;
@@ -43,6 +43,22 @@
     }
     .btn-login {
         width: 48%;
+        background-color: #0078FC;
+        color: white;
+        margin-top: 20px;
+        padding: 10px;
+        border: none;
+        box-sizing: border-box;
+        font-size: 18px;
+        display: inline-block;
+        border: 0;
+        height: 41px;
+        vertical-align: middle;
+        text-align: center;
+        text-decoration: none;
+    }
+    .btn-save {
+        width: 100%;
         background-color: #0078FC;
         color: white;
         margin-top: 20px;

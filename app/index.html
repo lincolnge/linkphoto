@@ -21,10 +21,11 @@
 
 <body>
   {% if user.is_authenticated %}
-  <p>Welcome, <a href="/accounts/profile/">{{ user.username }}</a>. Thanks for logging in. <a href="/accounts/logout/">logout</a>
+    <p>你好! <a href="/accounts/profile/">{{ user.username }}</a>. 欢迎登录 linkphoto. <a href="/accounts/logout/">登出</a>
+    <a href="/accounts/password/">修改密码</a>
   </p>
   {% else %}
-  <p>Welcome, new user. Please log in.</p>
+    <p>你好! 新用户, 请登录.</p>
   {% endif %}
 
   <!-- <div id='calendar'></div> -->
