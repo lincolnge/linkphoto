@@ -13,7 +13,16 @@ from django.views.decorators.csrf import csrf_exempt
 
 @login_required
 def profile(request):
-    return render_to_response('accounts/profile.html', context_instance=RequestContext(request))
+    # return render_to_response('/accounts/profile.html',
+    # context_instance=RequestContext(request))
+    return HttpResponseRedirect('/')
+
+
+# @login_required
+def logout(request):
+    auth.logout(request)
+    # Redirect to a success page.
+    return HttpResponseRedirect("/")
 
 
 @csrf_exempt

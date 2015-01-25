@@ -1,0 +1,60 @@
+.error {
+    color: red;
+}
+.container {
+    margin: auto;
+    max-width: 800px;
+}
+#login, #register {
+    padding: 20px;
+    width: 50%;
+    box-sizing: border-box;
+    font-weight: 300;
+    background-color: #39b1a4;
+    background-color: rgba(57, 177, 164, 0.7);
+    padding: 1em;
+    label {
+        font-size: 1.2em;
+        font-weight: 200;
+        padding-top: 12px;
+        display: block;
+    }
+    input, .btn {
+        width: 100%;
+        font-size: 18px;
+        font-weight: 200;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+    .btn-register {
+        width: 48%;
+        background-color: hsl(8, 70%, 54%);
+        color: white;
+        margin-top: 20px;
+        padding: 10px;
+        border: none;
+        box-sizing: border-box;
+        font-size: 18px;
+        vertical-align: middle;
+        display: inline-block;
+        text-align: center;
+        height: 41px;
+        text-decoration: none;
+    }
+    .btn-login {
+        width: 48%;
+        background-color: #0078FC;
+        color: white;
+        margin-top: 20px;
+        padding: 10px;
+        border: none;
+        box-sizing: border-box;
+        font-size: 18px;
+        display: inline-block;
+        border: 0;
+        height: 41px;
+        vertical-align: middle;
+        text-align: center;
+        text-decoration: none;
+    }
+}

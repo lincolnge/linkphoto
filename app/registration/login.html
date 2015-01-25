@@ -2,20 +2,26 @@
 
 {% block content %}
 
+<div class="container">
+  <h1>登录</h1>
   {% if form.errors %}
-    <p class="error">Sorry, that's not a valid username or password</p>
+    <div class="error">抱歉, 请输入一个有效的帐号密码!!!</div>
   {% endif %}
-
-  <form action="" method="post">{% csrf_token %}
-    <label for="username">User name:</label>
-    <input type="text" name="username" value="" id="username">
-    <label for="password">Password:</label>
-    <input type="password" name="password" value="" id="password">
-
-    <input type="submit" value="login" />
-    <input type="hidden" name="next" value="{{ next|escape }}" />
-  </form>
-
-  <p><a href="/accounts/register">register</a></p>
-
+  <div>
+    <form action="" method="post" id="login">{% csrf_token %}
+      <div>
+        <label for="username">用户名:</label>
+        <input type="text" name="username" value="" id="username">
+      </div>
+      <div>
+        <label for="password">密码:</label>
+        <input type="password" name="password" value="" id="password">
+      </div>
+      <div>
+        <a href="/accounts/register/" class="btn btn-register">注册</a>
+        <input type="submit" class="btn btn-login" value="登录" />
+      </div>
+    </form>
+  </div>
+</div>
 {% endblock %}

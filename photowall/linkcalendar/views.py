@@ -18,8 +18,8 @@ from django.contrib.auth.decorators import login_required
 @csrf_exempt
 @login_required
 def eventname(request):
-    # tmp = EventName.objects.filter(user_id=request.user.id)
-    tmp = EventName.objects.all()
+    tmp = EventName.objects.filter(user_id=request.user.id)
+    # tmp = EventName.objects.all()
     events = []
 
     for entry in tmp:

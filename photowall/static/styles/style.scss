@@ -1,59 +1,48 @@
-/*body {
-    margin: 40px 10px;
-    padding: 0;
-    font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
-    font-size: 14px;
-}
-
-#calendar {
-    max-width: 900px;
-    margin: 0 auto;
-}*/
-
 body {
-	margin-top: 40px;
-	text-align: center;
-	font-size: 14px;
-	font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+    margin-top: 40px;
+    text-align: center;
+    font-size: 14px;
+    font-family: "Lucida Grande", Helvetica, Arial, Verdana, sans-serif;
+    user-select: none;
 }
-	
 #wrap {
-	width: 1100px;
-	margin: 0 auto;
+    width: 1100px;
+    margin: 0 auto;
 }
-	
 #external-events {
-	float: left;
-	width: 150px;
-	padding: 0 10px;
-	border: 1px solid #ccc;
-	background: #eee;
-	text-align: left;
+    float: left;
+    width: 150px;
+    padding: 0 10px;
+    border: 1px solid #ccc;
+    background: #eee;
+    text-align: left;
+    h4 {
+        font-size: 16px;
+        margin-top: 0;
+        padding-top: 1em;
+    }
+    .fc-event {
+        margin: 10px 0;
+        cursor: pointer;
+    }
+    p {
+        margin: 1.5em 0;
+        font-size: 11px;
+        color: #666;
+        input {
+            margin: 0;
+            vertical-align: middle;
+        }
+    }
 }
-	
-#external-events h4 {
-	font-size: 16px;
-	margin-top: 0;
-	padding-top: 1em;
+#calendar {
+    float: right;
+    width: 900px;
 }
-	
-#external-events .fc-event {
-	margin: 10px 0;
-	cursor: pointer;
-}
-	
-#external-events p {
-	margin: 1.5em 0;
-	font-size: 11px;
-	color: #666;
-}
-	
-#external-events p input {
-	margin: 0;
-	vertical-align: middle;
+.form-add-events {
+    display: none;
 }
 
-#calendar {
-	float: right;
-	width: 900px;
+.display-block {
+    display: block !important;
 }

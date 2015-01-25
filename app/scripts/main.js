@@ -115,14 +115,25 @@ $(document).ready(function() {
         }
     });
 
-    $("#addButton").on("click", function(event) {
-        event.preventDefault();
-        $(".form-add-events").addClass("display-block");
-    });
-    $("html").on("click", function(event) {
-        if (event.isDefaultPrevented()) {
-            return;
+    $("#addButton").on("click", function() {
+        // event.preventDefault();
+        var $addButton = $("#addButton");
+        var $formAddEvents = $(".form-add-events");
+        if (!$formAddEvents.hasClass("display-block")) {
+            $formAddEvents.addClass("display-block");
+            $addButton.text("hide form");
+        } else {
+            $formAddEvents.removeClass("display-block");
+            $addButton.text("add");
         }
-        $(".form-add-events").removeClass("display-block");
     });
+    // $(".form-add-events").on("click", function(event) {
+    //     event.preventDefault();
+    // })
+    // $("html").on("click", function(event) {
+    //     if (event.isDefaultPrevented()) {
+    //         return;
+    //     }
+    //     $(".form-add-events").removeClass("display-block");
+    // });
 });
