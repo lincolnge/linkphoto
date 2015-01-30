@@ -14,13 +14,13 @@ class CalType(models.Model):
 
 
 class EventName(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, blank=True)
     name = models.CharField(max_length=30)
     cal_type = models.ForeignKey(CalType)
     counts = models.IntegerField(blank=True)
     url = models.URLField(blank=True)
 
-    # 'EventName' object has no attribute '__getitem__'
+    # 为了解决 'EventName' object has no attribute '__getitem__'
     def __unicode__(self):
         return unicode(self.name)
 
