@@ -4,6 +4,8 @@
 
 该项目可以记录每天运动量。采用 fullcalendar + Django 搭建，数据库为 MySQL
 
+点击查看:  
+<http://linkphoto.sinaapp.com/>
 ## Create Database
 
 CREATE DATABASE app_linkphoto DEFAULT CHARACTER SET gbk COLLATE gbk_chinese_ci;
