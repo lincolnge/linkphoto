@@ -14,7 +14,8 @@ class CalType(models.Model):
 
 
 class EventName(models.Model):
-    user = models.ForeignKey(User, blank=True)
+    # user 其实不能为空, 在保存的时候, 一定会加数值, 这里只是为了 hack
+    user = models.ForeignKey(User, null=True, blank=True)
     name = models.CharField(max_length=30)
     cal_type = models.ForeignKey(CalType)
     counts = models.IntegerField(blank=True)
@@ -26,7 +27,7 @@ class EventName(models.Model):
 
 
 class Calendar(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, null=True, blank=True)
     title = models.ForeignKey(EventName)
     start = models.DateTimeField(null=True, blank=True)
     end = models.DateTimeField(null=True, blank=True)

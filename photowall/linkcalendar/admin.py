@@ -1,5 +1,6 @@
 from django.contrib import admin
 from photowall.linkcalendar.models import CalType, EventName, Calendar
+from datetime import datetime
 
 
 class EventNameAdmin(admin.ModelAdmin):
@@ -92,6 +93,8 @@ class CalendarAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         if not obj.user_id:
             obj.user_id = request.user.id
+        if not obj.start:
+            obj.start = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
         obj.save()
 
 admin.site.register(CalType)
