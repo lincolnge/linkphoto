@@ -15,6 +15,7 @@ from django.contrib.auth.decorators import login_required
 
 
 # 事件
+# http://localhost:4001/cal/eventname/
 @csrf_exempt
 @login_required
 def eventname(request):
@@ -38,10 +39,14 @@ def eventname(request):
 
 
 # 输出 JSON
+# http://localhost:4001/cal/events_json/?start=2015-02-01&end=2015-03-15&timezone=Aisa%2FShanghai&_=1423298162705
 @csrf_exempt
 @login_required
 def events_json(request):
-    tmp = Calendar.objects.filter(user_id=request.user.id)
+    datetime_start = request.GET['start']
+    datetime_end = request.GET['end']
+    tmp = Calendar.objects.filter(
+        user_id=request.user.id, start__range=(datetime_start, datetime_end))
     # tmp = Calendar.objects.all()
     events = []
 
