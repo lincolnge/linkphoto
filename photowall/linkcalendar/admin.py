@@ -1,5 +1,5 @@
 from django.contrib import admin
-from photowall.linkcalendar.models import CalType, EventName, Calendar
+from photowall.linkcalendar.models import CalTab, CalType, EventName, Calendar
 from datetime import datetime
 
 
@@ -8,7 +8,7 @@ class EventNameAdmin(admin.ModelAdmin):
 
     selected_fieldsets = (
         (None, {
-            'fields': ('name', 'cal_type')
+            'fields': ('name', 'cal_type', 'cal_tab')
         }),
         ('Advanced options', {
             'fields': ('counts', 'url')
@@ -17,7 +17,7 @@ class EventNameAdmin(admin.ModelAdmin):
 
     admin_fieldsets = (
         (None, {
-            'fields': ('name', 'user', 'cal_type')
+            'fields': ('name', 'user', 'cal_type', 'cal_tab')
         }),
         ('Advanced options', {
             'fields': ('counts', 'url')
@@ -57,7 +57,6 @@ class CalendarAdmin(admin.ModelAdmin):
 
     def queryset(self, request):
         qs = super(CalendarAdmin, self).queryset(request)
-        # If super-user, show all comments
         if request.user.is_superuser:
             return qs
         return qs.filter(user=request.user)
@@ -97,6 +96,74 @@ class CalendarAdmin(admin.ModelAdmin):
             obj.start = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
         obj.save()
 
-admin.site.register(CalType)
+
+class CalTabAdmin(admin.ModelAdmin):
+    list_display = ('name', 'user')
+
+    selected_fieldsets = (
+        (None, {
+            'fields': ('name', )
+        }),
+    )
+
+    admin_fieldsets = (
+        (None, {
+            'fields': ('name', 'user')
+        }),
+    )
+
+    def get_fieldsets(self, request, obj=None):
+        if request.user.is_superuser:
+            return self.admin_fieldsets
+        else:
+            return self.selected_fieldsets
+
+    def queryset(self, request):
+        qs = super(CalTabAdmin, self).queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(user=request.user)
+
+    def save_model(self, request, obj, form, change):
+        if not obj.user_id:
+            obj.user_id = request.user.id
+        obj.save()
+
+
+class CalTypeAdmin(admin.ModelAdmin):
+    list_display = ('name', 'user')
+
+    selected_fieldsets = (
+        (None, {
+            'fields': ('name', )
+        }),
+    )
+
+    admin_fieldsets = (
+        (None, {
+            'fields': ('name', 'user')
+        }),
+    )
+
+    def get_fieldsets(self, request, obj=None):
+        if request.user.is_superuser:
+            return self.admin_fieldsets
+        else:
+            return self.selected_fieldsets
+
+    def queryset(self, request):
+        qs = super(CalTypeAdmin, self).queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(user=request.user)
+
+    def save_model(self, request, obj, form, change):
+        if not obj.user_id:
+            obj.user_id = request.user.id
+        obj.save()
+
+
+admin.site.register(CalType, CalTypeAdmin)
+admin.site.register(CalTab, CalTabAdmin)
 admin.site.register(EventName, EventNameAdmin)
 admin.site.register(Calendar, CalendarAdmin)
