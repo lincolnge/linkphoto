@@ -5,9 +5,17 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 
+class CalTab(models.Model):
+    user = models.ForeignKey(User, null=True, blank=True)
+    name = models.CharField(max_length=30)
+
+    def __unicode__(self):
+        return unicode(self.name)
+
+
 class CalType(models.Model):
-    user = models.ForeignKey(User)
-    name = models.CharField(max_length=30, blank=True)
+    user = models.ForeignKey(User, null=True, blank=True)
+    name = models.CharField(max_length=30)
 
     def __unicode__(self):
         return unicode(self.name)
@@ -18,6 +26,7 @@ class EventName(models.Model):
     user = models.ForeignKey(User, null=True, blank=True)
     name = models.CharField(max_length=30)
     cal_type = models.ForeignKey(CalType)
+    cal_tab = models.ManyToManyField(CalTab)
     counts = models.IntegerField(blank=True)
     url = models.URLField(blank=True)
 
