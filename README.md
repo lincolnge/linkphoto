@@ -2,10 +2,11 @@
 
 ## Introduce
 
-该项目可以记录每天运动量。采用 fullcalendar + Django 搭建，数据库为 MySQL
+To record training every time of every day, Using FullCalendar + Django, Database is MySQL.
 
-点击查看:  
+You can see it on:  
 <http://linkphoto.sinaapp.com/>
+
 ## Create Database
 
 CREATE DATABASE app_linkphoto DEFAULT CHARACTER SET gbk COLLATE gbk_chinese_ci;
@@ -24,5 +25,5 @@ In Dir app/
 
 ## References
 
-- fullcalendar: <http://fullcalendar.io/>
-- jqueryui: <http://jqueryui.com/>
+- FullCalendar: <http://fullcalendar.io/>
+- jQuery UI: <http://jqueryui.com/>
