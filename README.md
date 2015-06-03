@@ -7,6 +7,11 @@ To record training every time of every day, Using FullCalendar + Django, Databas
 You can see it on:  
 <http://linkphoto.sinaapp.com/>
 
+Guest Login:
+
+	user: guest
+	password: xdmg,NGymG3ut%Q6
+
 ## Create Database
 
 CREATE DATABASE app_linkphoto DEFAULT CHARACTER SET gbk COLLATE gbk_chinese_ci;
